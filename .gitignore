@@ -1,0 +1,12 @@
+# Ignore node modules in all folders
+node_modules/
+
+# Environment files
+.env
+.env.*
+
+# Logs
+*.log
+
+# remaining task
+remains.txt
