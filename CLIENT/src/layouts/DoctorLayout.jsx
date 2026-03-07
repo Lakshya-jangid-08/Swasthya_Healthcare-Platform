@@ -1,11 +1,12 @@
+import React from "react";
 import { Outlet } from "react-router-dom";
-import Footer from "../components/Footer";
-import DoctorHeader from "../components/DoctorHeader";
+import Header from "./Header";
+import Footer from "./Footer";
 
 const DoctorLayout = () => {
   return (
     <>
-      <DoctorHeader />
+      <Header />
       <Outlet />
       <Footer />
     </>

@@ -1,12 +1,13 @@
+import React from "react";
 import { Route } from "react-router-dom";
 import ProtectedRoute from  "../routes/ProtectedRoute";
-import DoctorLayout from "../layouts/DoctorLayout";
 import DoctorProfile from "../features/Doctors/Pages/DoctorProfile";
 import DoctorEditProfile from "../features/Doctors/Pages/DoctorEditProfile";
 import DoctorChat from "../features/Doctors/Pages/DoctorChat";
 import DocotrPaymentStatus from "../features/Doctors/Pages/DocotrPaymentStatus";
 import DoctorReviews from "../features/Doctors/Pages/DoctorReviews";
 import DoctorAppointment from "../features/Doctors/Pages/DoctorAppointment";
+import DoctorLayout from "../layouts/DoctorLayout";
 
 const DoctorRoutes = () => {
   return (

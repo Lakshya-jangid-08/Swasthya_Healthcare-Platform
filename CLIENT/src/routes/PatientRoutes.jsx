@@ -1,5 +1,5 @@
+import React from "react";
 import { Route } from "react-router-dom";
-import PatientLayout from "../layouts/PatientLayout";
 import ProtectedRoute from "../routes/ProtectedRoute";
 import PatientProfile from "../features/Patients/Pages/PatientProfile";
 import PatientAppointment from "../features/Patients/Pages/PatientAppointments";
@@ -7,6 +7,7 @@ import PatientBookAppointment from "../features/Patients/Pages/PatientBookAppoin
 import PatientChat from "../features/Patients/Pages/PatientChat";
 import PatientAnalytics from "../features/Patients/Pages/PatientAnalytics";
 import PatientEditProfile from "../features/Patients/Pages/PatientEditProfile";
+import PatientLayout from "../layouts/PatientLayout";
 
 const PatientRoutes = () => {
   return (

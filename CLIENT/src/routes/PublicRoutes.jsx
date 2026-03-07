@@ -1,11 +1,12 @@
+import React from "react";
 import { Route } from "react-router-dom";
-import PublicLayout from "../layouts/PublicLayout";
 import Login from "../features/Auth/Pages/Login";
 import Signup from "../features/Auth/Pages/Signup";
 import Home from "../features/Shared/Pages/Home";
 import DocotrLists from "../features/Shared/Pages/DocotrLists";
 import About from "../features/Shared/Pages/About";
 import Contact from "../features/Shared/Pages/Contact";
+import PublicLayout from "../layouts/PublicLayout";
 
 
 const PublicRoutes = () => {

@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../../context/AuthContext";
 
 function DoctorSignup({ isPatientLogin }) {
 
@@ -70,10 +72,6 @@ function DoctorSignup({ isPatientLogin }) {
 
   useEffect(() => {
     setStep(1);
-    setAddress("");
-    setGender("");
-    setAge("");
-    setBloodGroup("");
     setSpecialization("");
     setDegree("");
     setYearsOfExperience("");
