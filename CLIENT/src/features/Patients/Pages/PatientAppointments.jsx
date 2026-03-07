@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { getAppointmentsAPI } from '../../../service/apis';
 import { useAuth } from '../../../context/AuthContext';
 import ProfileSidebar from '../Components/ProfileSlidebar';
+import AppointmentCard from '../Components/AppointmentCard';
 
 function PatientAppointment() {
   

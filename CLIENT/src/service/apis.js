@@ -44,3 +44,7 @@ export const cancelAppointmentAPI = (appointmentId) => {
 export const doctorSignupAPI = (doctorData) => {
   return api.post("/auth/create-doctor", doctorData);
 }
+
+export const doctorAppointments = () => {
+    return api.get("/doctors/appointments")
+}

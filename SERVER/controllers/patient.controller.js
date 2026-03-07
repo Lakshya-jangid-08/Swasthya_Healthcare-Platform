@@ -91,7 +91,7 @@ const getAppointmentLists  = async(req, res) => {
             select: "specialization clinicAddress",
             populate: {
             path: "userId",
-            select: "fullname image",
+            select: "fullname profileImage",
             },
         })
         .sort({ appointmentDate: -1 });

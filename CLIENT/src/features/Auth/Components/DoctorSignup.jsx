@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
+import { doctorSignupAPI } from "../../../service/apis";
 
 function DoctorSignup({ isPatientLogin }) {
 
@@ -175,21 +176,6 @@ function DoctorSignup({ isPatientLogin }) {
               onChange={(e) => setClinicAddress(e.target.value)}
               className="w-full rounded-lg border px-4 py-3 text-sm 
               focus:ring-2 focus:ring-emerald-400"
-            />
-          </div>
-
-          {/* adress */}
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-600 mb-1">
-              Address
-            </label>
-            <input
-              type="text"
-              value={address}
-              placeholder="Enter Address"
-              onChange={(e) => setAddress(e.target.value)}
-              className="w-full rounded-lg border px-4 py-3 text-sm 
-            focus:ring-2 focus:ring-emerald-400"
             />
           </div>
 
