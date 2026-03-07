@@ -1,6 +1,7 @@
 const express = require('express');
 const { loginUser, updateUser, deleteUser, createPatient, createDoctor, getMe, logOutUser, getProfile } = require('../controllers/auth.controller');
 const authMiddleware = require('../middlewares/auth.middleware');
+const { default: upload } = require('../middlewares/multer.middleware');
 const authRouter = express.Router();
 
 authRouter.get('/me', getMe);
@@ -13,7 +14,7 @@ authRouter.post('/create-patient', createPatient);
 
 authRouter.post('/login', loginUser);
 
-authRouter.put('/update-user',authMiddleware, updateUser)
+authRouter.put('/update-user',authMiddleware, upload.single("profileImage"), updateUser)
 
 authRouter.delete('/delete-user',authMiddleware, deleteUser)
 

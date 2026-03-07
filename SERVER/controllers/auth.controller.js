@@ -4,6 +4,7 @@ const jsonwebtoken = require("jsonwebtoken");
 const { JWT_SECRET, JWT_EXPIRES_IN } = require("../configs/env");
 const Patient = require("../models/Patient.model");
 const Doctor = require("../models/Doctor.model");
+const { uploadOnCloudinary } = require("../utils/Cloudinary");
 
 const getMe = async (req, res) => {
   try {
@@ -222,6 +223,17 @@ const updateUser = async (req, res) => {
     
     if (!user) {
       return res.status(400).json({ message: "Invalid !" });
+    }
+
+    if(req.file) {
+      const cloudinaryResponse = await uploadOnCloudinary(req.file.path);
+
+      if (!cloudinaryResponse) {
+        return res.status(500).json({ message: "Cloudinary upload failed" });
+      }
+
+      user.profileImage = cloudinaryResponse.secure_url;
+      
     }
 
     if (email && email !== user.email) {

@@ -5,7 +5,7 @@ import Footer from "./Footer";
 
 const PublicLayout = () => {
 
-    const location = useLocation
+    const location = useLocation()
 
     const hideLayout = 
     location.pathname == '/login' ||
@@ -15,7 +15,7 @@ const PublicLayout = () => {
     <>
         {!hideLayout && <Header/>}
         <Outlet/>
-        <Footer/>
+        {!hideLayout && <Footer />}
     </>
   )
 };

@@ -13,7 +13,7 @@ function PatientEditProfile() {
   const [bloodGroup, setBloodGroup] = useState("");
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
-  const [profileImage, setProfileImage] = useState("")
+  const [profileImage, setProfileImage] = useState(null)
 
   useEffect( () => {
     getProfile();
@@ -22,21 +22,20 @@ function PatientEditProfile() {
   const handleEditProfile = async(e) => {
     e.preventDefault();
     try {      
-      await updateProfile({
-        profileImage,
-        fullname,
-        email,
-        contactNumber,
-        address
-      });
-        setUser((prev) => ({
-          ...prev,
-          profileImage,
-          fullname,
-          email,
-          contactNumber,
-          address,
-        }));
+      const formData = new FormData();
+
+      if (profileImage) {
+        formData.append("profileImage", profileImage);
+      }
+
+      formData.append("fullname", fullname);
+      formData.append("email", email);
+      formData.append("contactNumber", contactNumber);
+      formData.append("address", address);
+      
+      await updateProfile(formData);
+      
+      await getProfile(); 
         alert("Profile updated successfully");
     } catch(error) {
       console.error("Error updating profile:", error);
@@ -71,7 +70,7 @@ function PatientEditProfile() {
       </h2>
 
       <div className="space-y-4">
-        <input className="w-full border px-3 py-2 rounded-md" value={profileImage} onChange={(e) => setProfileImage(e.target.value)}  placeholder="Profile url" />
+        <input type="file" accept="image/*" className="w-full border px-3 py-2 rounded-md" onChange={(e) => setProfileImage(e.target.files[0])}/>
         <input className="w-full border px-3 py-2 rounded-md" value={fullname} onChange={(e) => setFullname(e.target.value)}  placeholder="Full Name" />
         <input className="w-full border px-3 py-2 rounded-md" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
         <input className="w-full border px-3 py-2 rounded-md" value={contactNumber} onChange={(e) => setContactNumber(e.target.value)} placeholder="Phone" />

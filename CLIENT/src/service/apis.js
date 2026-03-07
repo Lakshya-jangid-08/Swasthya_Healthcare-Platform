@@ -1,7 +1,8 @@
 import api from "./axios.config";
 
-export const updateProfile = (profileData) =>
-  api.put("/auth/update-user", profileData);
+export const updateProfile = (profileData) =>{
+  return api.put("/auth/update-user", profileData);
+}
 
 
 export const checkAuthAPI = () => {

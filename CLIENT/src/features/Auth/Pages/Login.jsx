@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { FaHome } from "react-icons/fa";
 import { useAuth } from '../../../context/AuthContext'
 
 function Login() {
@@ -39,7 +40,13 @@ function Login() {
     }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-300 to-emerald-100 px-4">
+    <div className="min-h-screen relative flex items-center justify-center bg-gradient-to-br from-emerald-300 to-emerald-100 px-4">
+        <Link 
+          to="/"
+          className="absolute top-6 left-6 text-2xl hover:scale-110 transition"
+        >
+          <FaHome />
+        </Link>
       <form className="w-full max-w-md">
         <div className="bg-white rounded-2xl shadow-2xl p-8 transition hover:shadow-emerald-200">
           

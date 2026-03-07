@@ -1,11 +1,19 @@
 import React, { useState } from 'react'
 import PatientSignup from '../Components/PatientSignup';
 import DoctorSignup from '../Components/DoctorSignup';
+import { FaHome } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 function Signup() {
     const [isPatientLogin, setIsPatientLogin] = useState(true);
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-300 to-emerald-100 px-4">
+        <div className="min-h-screen relative  flex items-center justify-center bg-gradient-to-br from-emerald-300 to-emerald-100 px-4">
+            <Link 
+                to="/"
+                className="absolute top-6 left-6 text-2xl hover:scale-110 transition"
+            >
+                <FaHome />
+            </Link>
             <form className="w-full max-w-md">
                 <div className="bg-white shadow-2xl">
                     <div className="flex items-center w-full bg-emerald-300 text-white mb-2">
