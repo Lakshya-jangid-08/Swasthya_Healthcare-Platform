@@ -20,8 +20,8 @@ const getDoctor = async (req, res) => {
         const { doctorId } = req.params
         
         const doctor = await Doctor.findById(doctorId)
-        .populate("specialization clinicAddress consultationFee isVerified status")
-        .populate("userId", "fullname email contactNumber");
+        .populate("specialization degree clinicAddress consultationFee isVerified status")
+        .populate("userId", "fullname email profileImage contactNumber");
         return res.status(200).json({doctor , message : "Fetch succesfully"});
     
     } catch(err) {
