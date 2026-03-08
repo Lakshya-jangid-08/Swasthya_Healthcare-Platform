@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const authRouter = require("./routes/auth.routes");
 const patientRouter = require("./routes/patient.routes");
 const doctorRouter = require("./routes/doctor.routes");
+const { chatRouter } = require("./routes/Chat.routes");
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(cookieParser());
 app.use("/api/auth", authRouter);
 app.use("/api/patients", patientRouter);
 app.use("/api/doctors", doctorRouter);
+app.use("/api/chat", chatRouter);
 
 app.use((err, req, res, next) => {
   console.error(err);
