@@ -48,3 +48,11 @@ export const doctorSignupAPI = (doctorData) => {
 export const doctorAppointments = () => {
     return api.get("/doctors/appointments")
 }
+
+export const getAllMessagesAPI = (otherUserId) => {
+  return api.get(`/chat/message/${otherUserId}`);
+}
+
+export const getUserDataApi = (id) => {
+  return api.get(`/user/profile/${id}`);
+} 

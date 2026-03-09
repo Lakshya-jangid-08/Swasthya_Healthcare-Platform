@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ChatHeader from "./ChatHeader";
 import { useSocket } from "../../../context/SocketContext";
 import { IoSend } from "react-icons/io5";
+import { getAllMessagesAPI } from "../../../service/apis";
 
 function ChatCard({SenderId, ReceiverId}) {
 
@@ -45,28 +46,30 @@ function ChatCard({SenderId, ReceiverId}) {
     return () => socket.off("rec_msg");
   }, [socket])
 
+  const fetchMsg = async (receiverId) => {
+    const data = await getAllMessagesAPI(receiverId);
+    return data; 
+  }
 
-  // useEffect(() => {
-
-  //   socket.on("welcome", (mesaage)=>{
-  //     console.log(mesaage);
-  //   })
-
-  //   socket.on("receive_message", (messageData) => {
-  //     console.log("message:", messageData);
-  //   });
+useEffect(() => {
+  const loadMessages = async () => {
+    const data = await fetchMsg(ReceiverId);
+    console.log(data.data.msgs);
     
-  //   return () => {
-  //     socket.off("receive_message");
-  //   };
+    await setMessageData(data.data.msgs);
+    console.log(messageData);
+    
+  };
 
-  // }, []);
+  loadMessages();
+}, []);
+  
 
   return (
   <>
     {/* HEADER */}
     <div className="flex-shrink-0 border-b bg-white">
-      <ChatHeader />
+      <ChatHeader ReceiverId = {ReceiverId}/>
     </div>
 
     {/* MESSAGES */}
@@ -76,7 +79,7 @@ function ChatCard({SenderId, ReceiverId}) {
         const isMe = m.senderId === SenderId;
 
         return (
-          <div key={m.id} className={`flex ${isMe ? "justify-end" : "justify-start"}`} >
+          <div key={m.id + Math.random(0,1000)} className={`flex ${isMe ? "justify-end" : "justify-start"}`} >
             <div className={` max-w-xs md:max-w-md px-4 py-2 text-sm ${isMe
                   ? "bg-green-700 text-white rounded-l-xl rounded-br-xl"
                   : "bg-white text-gray-800 rounded-r-xl rounded-bl-xl border"}

@@ -1,5 +1,5 @@
 const Chat = require("../models/Chat.model");
-const { default: Message } = require("../models/Message.Model");
+const Message = require("../models/Message.Model");
 
 const getUserForSlidebar = async (req, res) => {
     try {
@@ -62,38 +62,39 @@ const getMessages = async (req, res) => {
       
         return res.status(200).json({msgs, message : "Fetched successfully"});
     } catch(err) {
+        console.log(err);
         return res.status(500).json({ message: "SERVER ERROR" });
     }
 };
 
-const sendMessage = async(req, res) => {
-    try {
+// const sendMessage = async(req, res) => {
+//     try {
 
-        const { otherUserId } = req.params;
-        const userId = req.user.id;
-        const {text} = req.body;
-        const msg = await Message.create({
-            senderId : userId,
-            receiverId : otherUserId,
-            text
-        })
+//         const { otherUserId } = req.params;
+//         const userId = req.user.id;
+//         const {text} = req.body;
+//         const msg = await Message.create({
+//             senderId : userId,
+//             receiverId : otherUserId,
+//             text
+//         })
         
-        // Emit the new message to receiver's socket id
-        const receiverSocketId = userSocketMap[otherUserId]
+//         // Emit the new message to receiver's socket id
+//         const receiverSocketId = userSocketMap[otherUserId]
 
-        if(receiverSocketId) {
-            io.to(receiverSocketId).emit("newMessage", msg);
-        }
+//         if(receiverSocketId) {
+//             io.to(receiverSocketId).emit("newMessage", msg);
+//         }
 
-        return res.status(200).json({msg, message : "Successfull send !"})
+//         return res.status(200).json({msg, message : "Successfull send !"})
 
-    } catch(error) {
-        return res.status(500).json({ message: "SERVER ERROR" });
-    }
-}
+//     } catch(error) {
+//         return res.status(500).json({ message: "SERVER ERROR" });
+//     }
+// }
 
 module.exports = {
     getUserForSlidebar,
     getMessages,
-    sendMessage
+    // sendMessage
 }

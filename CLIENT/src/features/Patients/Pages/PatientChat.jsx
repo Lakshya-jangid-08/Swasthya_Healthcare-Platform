@@ -11,7 +11,7 @@ function PatientChat() {
   return (
     <div className='min-h-screen w-full flex'>
       <div className='w-1/4 border-r-2 border-black'>
-        <ChatHeader/>
+        {/* <ChatHeader ReceiverId = {id}/> */}
         {/* ChatPeople */}
       </div>
       <div className='flex flex-col flex-1 h-screen bg-blue-300'>
