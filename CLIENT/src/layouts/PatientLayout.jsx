@@ -8,9 +8,9 @@ const PatientLayout = () => {
   location.pathname == '*/inbox/*';
   return (
     <>
-     {!location && <Header/>} 
+      <Header/>
       <Outlet />
-      {!location && <Footer />}  
+      <Footer />  
     </>
   );
 };

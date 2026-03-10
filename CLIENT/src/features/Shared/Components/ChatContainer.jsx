@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import ChatHeader from "./ChatHeader";
-import { useSocket } from "../../../context/SocketContext";
-import { IoSend } from "react-icons/io5";
-import { getAllMessagesAPI } from "../../../service/apis";
+import React, { useEffect, useState } from 'react'
+import { useSocket } from '../../../context/SocketContext';
+import InboxHeader from './InboxHeader';
+import { IoSend } from 'react-icons/io5';
+import { getAllMessagesAPI } from '../../../service/apis';
 
-function ChatCard({SenderId, ReceiverId}) {
+function ChatContainer({SenderId, ReceiverId}) {
 
   const {socket, connectSocket} = useSocket();
   const [message, setMessage] = useState("");
@@ -35,6 +35,8 @@ function ChatCard({SenderId, ReceiverId}) {
     socket.on("getOnlineUsers", (obj)=>{
       setonlineUser(obj)
     })
+    console.log("online users", onlineUser);
+    
     return () => socket.off("getOnlineUsers");
   }, [socket])
   
@@ -54,35 +56,31 @@ function ChatCard({SenderId, ReceiverId}) {
 useEffect(() => {
   const loadMessages = async () => {
     const data = await fetchMsg(ReceiverId);
-    console.log(data.data.msgs);
-    
-    await setMessageData(data.data.msgs);
-    console.log(messageData);
-    
+    setMessageData(data?.data?.msgs || []);
   };
 
   loadMessages();
-}, []);
+}, [ReceiverId]);
   
 
   return (
   <>
     {/* HEADER */}
     <div className="flex-shrink-0 border-b bg-white">
-      <ChatHeader ReceiverId = {ReceiverId}/>
+      <InboxHeader ReceiverId = {ReceiverId}/>
     </div>
 
     {/* MESSAGES */}
     <div className="flex-1 w-full overflow-y-auto px-6 py-4 bg-gray-100 space-y-3">
 
-      {messageData.map((m) => {
+      {messageData.map((m,index) => {
         const isMe = m.senderId === SenderId;
 
         return (
-          <div key={m.id + Math.random(0,1000)} className={`flex ${isMe ? "justify-end" : "justify-start"}`} >
-            <div className={` max-w-xs md:max-w-md px-4 py-2 text-sm ${isMe
-                  ? "bg-green-700 text-white rounded-l-xl rounded-br-xl"
-                  : "bg-white text-gray-800 rounded-r-xl rounded-bl-xl border"}
+          <div key={index} className={`flex ${isMe ? "justify-end" : "justify-start"}`} >
+            <div className={` max-w-xs md:max-w-md px-4 py-2 text-lg ${isMe
+                  ? "bg-green-700 text-white rounded-l-xl rounded-tr-xl"
+                  : "bg-white text-gray-800 rounded-r-xl rounded-tl-xl border"}
               `}>
               {m.text}
             </div>
@@ -116,4 +114,4 @@ useEffect(() => {
   );
 }
 
-export default ChatCard;
+export default ChatContainer

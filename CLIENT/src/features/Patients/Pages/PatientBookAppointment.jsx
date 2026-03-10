@@ -178,11 +178,7 @@ function PatientBookAppointment() {
               {/* ACTION BUTTONS */}
             <div className="flex gap-3 mt-4">
 
-              <button className="px-4 py-2 rounded-lg border border-emerald-200 text-emerald-600 font-medium hover:bg-emerald-500 hover:text-white">
-                Follow
-              </button>
-
-              <Link to={`/patient/inbox/${id}`} className="px-4 py-2 rounded-lg border border-sky-400 text-sky-700 font-medium hover:bg-sky-500 hover:text-white">
+              <Link to={`/inbox/${doctor.userId._id}`} className="px-4 py-2 rounded-lg border border-sky-400 text-sky-700 font-medium hover:bg-sky-500 hover:text-white">
                 Message
               </Link>
 

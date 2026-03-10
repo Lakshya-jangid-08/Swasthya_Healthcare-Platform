@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { assets } from "../assets/assets_frontend/assets";
 import { useAuth } from "../context/AuthContext";
 import { FaUser, FaBars } from "react-icons/fa";
+import { IoChatbubbles } from "react-icons/io5";
 
 function Header() {
   const { user, loading, logout, isLoggingOut } = useAuth();
   const [open, setOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-
+  const nav = useNavigate();
   if (loading) return null;
 
   const renderDropdown = () => {
@@ -63,41 +64,55 @@ function Header() {
         </div>
 
         {/* RIGHT ACTIONS */}
-        <div className="flex items-center gap-4">
+<div className="flex items-center gap-3">
+  {user ? (
+    <div className="relative flex items-center gap-2">
 
-          {user ? (
-            <div className="relative">
-              <button
-                onClick={() => setOpen(!open)}
-                className="bg-blue-600 p-2 rounded-full"
-              >
-                <FaUser size={18} color="white" />
-              </button>
+      {/* Chat Button */}
+      <button
+        onClick={() => nav("/inbox")}
+        className="bg-black hover:bg-gray-800 transition p-2 rounded-full"
+      >
+        <IoChatbubbles size={18} className="text-white" />
+      </button>
 
-              {open && (
-                <div className="absolute right-0 mt-3 w-48 bg-white shadow rounded-xl border z-50">
+      {/* Profile Button */}
+      <button
+        onClick={() => setOpen(!open)}
+        className="bg-blue-600 hover:bg-blue-700 transition p-2 rounded-full"
+      >
+        <FaUser size={18} className="text-white" />
+      </button>
 
-                  {renderDropdown()}
+      {/* Dropdown */}
+      {open && (
+        <div className="absolute right-0 top-full mt-2 w-48 bg-white border rounded-xl shadow-lg z-50 overflow-hidden">
 
-                  <button
-                    onClick={logout}
-                    disabled={isLoggingOut}
-                    className="w-full text-left px-4 py-2 text-red-500 hover:bg-gray-100"
-                  >
-                    {isLoggingOut ? "Logging out..." : "Logout"}
-                  </button>
+          <div className="py-1">
+            {renderDropdown()}
+          </div>
 
-                </div>
-              )}
-            </div>
-          ) : (
-            <Link
-              to="/signup"
-              className="hidden md:block bg-blue-500 text-white px-4 py-2 rounded-full"
+          <div className="border-t">
+            <button
+              onClick={logout}
+              disabled={isLoggingOut}
+              className="w-full text-left px-4 py-2 text-red-500 hover:bg-red-50 transition"
             >
-              Create Account
-            </Link>
-          )}
+              {isLoggingOut ? "Logging out..." : "Logout"}
+            </button>
+          </div>
+
+        </div>
+      )}
+    </div>
+  ) : (
+    <Link
+      to="/signup"
+      className="hidden md:block bg-blue-500 hover:bg-blue-600 transition text-white px-4 py-2 rounded-full"
+    >
+      Create Account
+    </Link>
+  )}
 
           {/* MOBILE MENU */}
           <button

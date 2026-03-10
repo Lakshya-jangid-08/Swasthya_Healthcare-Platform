@@ -56,3 +56,8 @@ export const getAllMessagesAPI = (otherUserId) => {
 export const getUserDataApi = (id) => {
   return api.get(`/user/profile/${id}`);
 } 
+
+
+export const getUserlistAPI = () => {
+  return api.get('/chat/user-list');
+} 

@@ -24,7 +24,7 @@ const userSocketMap = {};
 
 io.on("connection", (socket) => {
   const userId = socket.handshake.query.userId;
-  console.log("User connected:", socket.id,"  -  " ,userId);
+  console.log("User connected:",userId);
   
   if(userId) {
     userSocketMap[userId] = socket.id
@@ -33,7 +33,6 @@ io.on("connection", (socket) => {
   io.emit("getOnlineUsers", Object.keys(userSocketMap))
 
   socket.on("send_msg", async(data) => {
-      console.log(data);
       
     const { senderId, receiverId, text } = data;
     
