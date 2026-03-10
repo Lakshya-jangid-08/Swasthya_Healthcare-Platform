@@ -14,6 +14,7 @@ const DoctorRoutes = () => {
     <Route element={<ProtectedRoute allowedRoles={["doctor"]} />}>
       <Route element = {<DoctorLayout/>}>
         <Route path="/doctor/profile" element={<DoctorProfile />} />
+        <Route path="/doctor/" element={<DoctorProfile />} />
         <Route path="/doctor/edit-profile" element={<DoctorEditProfile />} />
         <Route path="/doctor/chat" element={<DoctorChat />} />
         <Route path="/doctor/chat/:id" element={<DoctorChat />} />

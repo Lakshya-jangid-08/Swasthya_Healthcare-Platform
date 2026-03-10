@@ -22,9 +22,6 @@ function Header() {
           <Link to="/doctor/appointments" className="block px-4 py-2 hover:bg-gray-100">
             Appointments
           </Link>
-          <Link to="/doctor/analytics" className="block px-4 py-2 hover:bg-gray-100">
-            Analytics
-          </Link>
         </>
       );
     }
@@ -57,8 +54,15 @@ function Header() {
 
         {/* DESKTOP MENU */}
         <div className="hidden md:flex gap-6 font-semibold text-sm">
-          <Link to="/">HOME</Link>
-          <Link to="/doctors">ALL DOCTORS</Link>
+          {
+            user?.role === "doctor" ?
+            <></> :
+            <>
+              <Link to="/">HOME</Link>
+              <Link to="/doctors">ALL DOCTORS</Link>
+            </>
+
+          }
           <Link to="/about">ABOUT</Link>
           <Link to="/contact">CONTACT</Link>
         </div>
@@ -126,8 +130,15 @@ function Header() {
 
       {menuOpen && (
         <div className="md:hidden flex flex-col gap-3 py-4 border-t">
-          <Link to="/">HOME</Link>
-          <Link to="/doctors">ALL DOCTORS</Link>
+          {
+            user?.role === "doctor" ?
+            <></> :
+            <>
+              <Link to="/">HOME</Link>
+              <Link to="/doctors">ALL DOCTORS</Link>
+            </>
+
+          }
           <Link to="/about">ABOUT</Link>
           <Link to="/contact">CONTACT</Link>
         </div>

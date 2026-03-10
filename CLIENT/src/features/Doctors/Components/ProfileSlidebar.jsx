@@ -1,8 +1,11 @@
 import React from 'react'
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 function ProfileSidebar({ role }) {
-  const linkClass = ({ isActive }) =>
+
+  const location = useLocation();   // ← YOU MISSED THIS
+
+  const linkClass = (isActive) =>
     `block px-4 py-3 border-l-4 transition ${
       isActive
         ? "border-emerald-500 bg-emerald-50 text-emerald-600"
@@ -17,7 +20,7 @@ function ProfileSidebar({ role }) {
   ];
 
   const doctorSidebarLinks = [
-    { label: "Profile", path: "/doctor/profile" },
+    { label: "Profile", path: "/doctor/profile", match: ["/doctor/", "/doctor/profile"] },
     { label: "Edit Profile", path: "/doctor/edit-profile" },
     { label: "Payment Status", path: "/doctor/payments-status" },
     { label: "Appointments", path: "/doctor/appointments" },
@@ -29,19 +32,26 @@ function ProfileSidebar({ role }) {
   return (
     <aside className="w-full md:w-64 border-r">
       <div className="py-6">
-        {/* Back */}
+
         {role === "patient" && (
-          <NavLink to="/" className={linkClass}>
+          <NavLink to="/" className={({isActive}) => linkClass(isActive)}>
             ← Back to Home
           </NavLink>
         )}
 
-        {/* Sidebar Links */}
-        {links.map(({ label, path }) => (
-          <NavLink key={path} to={path} className={linkClass}>
-            {label}
-          </NavLink>
-        ))}
+        {links.map(({ label, path, match }) => {
+
+          const isActive = match
+            ? match.includes(location.pathname)
+            : location.pathname === path;
+
+          return (
+            <NavLink key={path} to={path} className={() => linkClass(isActive)}>
+              {label}
+            </NavLink>
+          );
+        })}
+
       </div>
     </aside>
   );
