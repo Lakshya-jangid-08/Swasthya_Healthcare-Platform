@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react';
 import { useSocket } from '../../../context/SocketContext';
 import InboxHeader from './InboxHeader';
 import { IoSend } from 'react-icons/io5';
@@ -9,6 +9,8 @@ function ChatContainer({SenderId, ReceiverId}) {
   const {socket, connectSocket} = useSocket();
   const [message, setMessage] = useState("");
   const [messageData, setMessageData] = useState([]);
+
+  const bottomRef = useRef(null);
 
   const handleSubmit = (e) => {
 
@@ -62,6 +64,13 @@ useEffect(() => {
   loadMessages();
 }, [ReceiverId]);
   
+useEffect(() => {
+  bottomRef.current?.scrollIntoView();
+}, [ReceiverId]); 
+
+useEffect(() => {
+  bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+}, [messageData]); 
 
   return (
   <>
@@ -87,7 +96,7 @@ useEffect(() => {
           </div>
         );
       })}
-
+      <div ref={bottomRef}></div>
     </div>
 
     {/* INPUT */}

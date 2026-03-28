@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { assets } from "../../../assets/assets_frontend/assets";
 import { cancelAppointmentAPI } from "../../../service/apis";
+import { useNavigate } from "react-router-dom";
 
 function AppointmentCard({ appointment }) {
   
   const [isActive, setIsActive] = useState(false);
   const [isCancelled, setIsCancelled] = useState(false);
+  const navigate = useNavigate();
 
   const handleCancelAppointment = async() => {
     const response = await cancelAppointmentAPI(appointment._id);
@@ -24,10 +26,10 @@ function AppointmentCard({ appointment }) {
       {/* Left Section */}
       <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
         {
-          appointment.doctorId?.userId?.image ? (
+          appointment.doctorId?.userId?.profileImage ? (
             <img
-              src={assets.appointment_img}
-              className="object-contain w-full sm:w-40 bg-blue-50 rounded"
+              src={appointment.doctorId.userId.profileImage}
+              className="object-contain h-28 w-28  bg-blue-50 rounded-full"
             />
           ) : (
             <div className="h-28 w-28 rounded-full bg-gray-200 flex items-center justify-center text-3xl text-gray-500">
@@ -37,7 +39,7 @@ function AppointmentCard({ appointment }) {
         }
 
         <div className="pl-0 sm:pl-2">
-          <h1 className="font-semibold text-lg">{appointment.doctorId?.userId?.fullname}</h1>
+          <h1 className="font-semibold text-lg cursor-pointer"onClick={()=>navigate(`/book-appointment/${appointment.doctorId._id}`) } >{appointment.doctorId?.userId?.fullname}</h1>
           <h5 className="text-gray-600">{appointment.doctorId?.specialization}</h5>
           <h5 className="text-gray-600">
             <span className="text-gray-700 font-semibold pr-2">Address</span>

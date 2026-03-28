@@ -43,7 +43,7 @@ function Inbox() {
 
   return (
     <div className='w-full h-screen bg-slate-300 flex'>
-        <div className='w-2/5 border-r-2 border-black'>
+        <div className={`${id ? "hidden md:block" : "block"} w-full md:w-2/5 border-r-2 border-black`}>
             {/* HEADER */}
             <div className='py-4 px-3 bg-slate-800 justify-between flex items-center'>
                 <h1 className='bg-clip-text bg-gradient-to-tr text-transparent from-sky-400 to-emerald-300 font-bold text-3xl'>Swastya</h1>
@@ -53,6 +53,7 @@ function Inbox() {
             <div className='w-full  py-2 px-2'> 
                 <input type='text' placeholder='Search Your Friends...' value={search} onChange={(e)=>setSearch(e.target.value)} className=' w-full px-2 py-1 rounded-lg border-black border-2 bg-transparent outline-none'/>
             </div>
+
             <div className='flex flex-col gap'>
                 {
                     filterUser.map((u, index)=> {
@@ -71,11 +72,11 @@ function Inbox() {
         </div>
         {
             id ? 
-            <div className='flex flex-col flex-1 h-screen'>
-                <ChatContainer SenderId = {user._id} ReceiverId = {id} />
+            <div className='flex flex-col flex-1 h-screen w-full'>
+                <ChatContainer SenderId={user._id} ReceiverId={id} />
             </div>
               :
-            <div className='relative w-full h-full bg-black text-white'>
+            <div className='relative hidden md:flex w-full h-full bg-slate-400 text-white'>
                 <div className='absolute text-5xl font-bold top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
                     Let's Start Talk
                 </div>
