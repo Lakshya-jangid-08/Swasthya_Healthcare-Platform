@@ -7,6 +7,7 @@ const patientRouter = require("./routes/patient.routes");
 const doctorRouter = require("./routes/doctor.routes");
 const { chatRouter } = require("./routes/Chat.routes");
 const userRoute = require("./routes/user.routes");
+const { sharedRouter } = require("./routes/shared.route");
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use("/api/patients", patientRouter);
 app.use("/api/doctors", doctorRouter);
 app.use("/api/chat", chatRouter);
 app.use("/api/user", userRoute);
+app.use("/api/share", sharedRouter);
 
 app.use((err, req, res, next) => {
   console.error(err);

@@ -1,4 +1,4 @@
-const { getDoctorLists, getDoctor, getAppointmentLists, getAppointment, cancelAppointment, getProfile, updateProfile, createAppointment } = require('../controllers/patient.controller');
+const { getDoctorLists, getDoctor, getAppointmentLists, getAppointment, cancelAppointment, getProfile, updateProfile, createAppointment, confirmAppointment, getTransactionLists } = require('../controllers/patient.controller');
 const authMiddleware = require('../middlewares/auth.middleware');
 const patientRouter = require('express').Router();
 
@@ -25,6 +25,10 @@ patientRouter.get('/appointments/:appointmentId',authMiddleware, getAppointment)
 
 // Cancel an appointment (before confirmed/completed)
 patientRouter.patch('/appointments/:appointmentId/cancel',authMiddleware, cancelAppointment);
+
+patientRouter.patch('/appointments/:appointmentId/confirm',authMiddleware, confirmAppointment);
+
+patientRouter.get('/transaction/details', authMiddleware, getTransactionLists);
 
 // -- yet not implement --
 

@@ -1,6 +1,8 @@
 const Appointment = require("../models/Appointment.model");
 const Doctor = require("../models/Doctor.model");
 const Patient = require("../models/Patient.model");
+const Transaction = require("../models/Transaction.model");
+const User = require("../models/Users.model");
 
 const getDoctorLists  = async (req, res) => {
     try {
@@ -172,10 +174,106 @@ const cancelAppointment = async (req, res) => {
 
         appointment.status = "CANCELLED";
         await appointment.save(); 
-        return res.status(200).json({appointment , message : "Fetch succesfully"});
+        return res.status(200).json({appointment , message : "Update Succesfully"});
     
     } catch(err) {
         return res.status(500).json({message : "SERVER ERROR !"})
+    }
+}
+
+const confirmAppointment = async (req, res) => {
+    try {
+        const {appointmentId} = req.params;
+        const userId = req.user.id;
+        const patient = await Patient.findOne({ userId });
+        if (!patient) {
+            return res.status(404).json({ message: "Patient profile not found" });
+        }
+        const appointment = await Appointment.findById(appointmentId)
+
+        if (!appointment) {
+            return res.status(404).json({ message: "Appointment not found" });
+        }
+
+        if (!appointment.patientId.equals(patient._id)) {
+            return res.status(403).json({ message: "Forbidden access" });
+        }
+
+        if (appointment.status === "COMPLETED") {
+            return res.status(400).json({ message: "Completed appointment cannot be confirmed" });
+        }
+
+        if (appointment.status === "CONFIRMED") {
+            return res.status(400).json({ message: "Appointment confirmed, already" });
+        }
+
+        // check patient has money or not
+        
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const walletBalance = user.walletBalance;
+        console.log("Patient userId:", patient.userId);
+        const doctorId = appointment.doctorId;
+        
+        const doctor = await Doctor.findById(doctorId);
+        if(!doctor) {
+            return res.status(404).json({ message: "Doctor profile not found" });
+        }
+        console.log("Doctor userId:", doctor.userId);
+        console.log(walletBalance , doctor.consultationFee);
+        
+        if(doctor.consultationFee > walletBalance) {
+            throw new Error("Insufficient balance");
+        }
+        
+        console.log("done1");
+        
+        await Transaction.create({
+            sender : patient.userId,
+            reciever : doctor.userId,
+            amount : doctor.consultationFee,
+            type : "DEBIT",
+            status : "SUCCESS",
+            purpose : "APPOINTMENT"
+        })
+        console.log("confirmed");
+        
+        user.walletBalance -= doctor.consultationFee;
+        await user.save();
+        appointment.status = "CONFIRMED";
+        await appointment.save(); 
+        return res.status(200).json({appointment , message : "Update Succesfully"});
+
+    } catch(err) {
+        return res.status(500).json({message : "Internal Server Error", error : err});
+    }
+}
+
+const getTransactionLists = async(req, res)=> {
+    try {
+        const userId = req.user.id;
+
+        const Transactions = await Transaction.find({
+            $or: [
+                { sender: userId },
+                { reciever: userId }
+            ]
+        })
+        .sort({ createdAt: -1 })
+        .populate('sender', 'fullname')
+        .populate('reciever', 'fullname');
+
+        res.json({
+            success: true,
+            Transactions
+        });
+
+    } catch(err) {
+        return res.status(500).json({message : "Internal Server Error", error : err});
     }
 }
 
@@ -231,6 +329,8 @@ module.exports = {
     getAppointmentLists,
     getAppointment,
     cancelAppointment,
+    confirmAppointment,
+    getTransactionLists,
     getProfile,
     updateProfile
 }

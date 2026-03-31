@@ -5,7 +5,7 @@ import { FaMinus, FaPlus, FaRupeeSign } from 'react-icons/fa';
 import { MdHistory } from 'react-icons/md';
 import { getTransactionLists } from '../../../service/apis';
 
-function DocotrPaymentStatus() {
+function PatientWalletStatus() {
     const {user} = useAuth();
 
     const [transactions, setTransactions] = useState([])
@@ -26,7 +26,6 @@ function DocotrPaymentStatus() {
         fetchTransactions();
     }, [user?.walletBalance]);
 
-    
   return (
     <div className='flex min-h-screen w-full'>
         <ProfileSidebar role={user?.role} />
@@ -79,4 +78,4 @@ function DocotrPaymentStatus() {
   )
 }
 
-export default DocotrPaymentStatus
+export default PatientWalletStatus

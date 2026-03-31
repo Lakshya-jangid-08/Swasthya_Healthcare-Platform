@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { assets } from "../../../assets/assets_frontend/assets";
-import { cancelAppointmentAPI } from "../../../service/apis";
+import { cancelAppointmentAPI, confirmAppointmentAPI } from "../../../service/apis";
 import { useNavigate } from "react-router-dom";
+import { IoIosWallet } from "react-icons/io";
+import { useAuth } from "../../../context/AuthContext";
 
 function AppointmentCard({ appointment }) {
-  
+    
+  const {getProfile} = useAuth();
+
   const [isActive, setIsActive] = useState(false);
   const [isCancelled, setIsCancelled] = useState(false);
+  const [isConfirmed, setIsConfirmed] = useState(false);
   const navigate = useNavigate();
 
   const handleCancelAppointment = async() => {
@@ -14,10 +19,20 @@ function AppointmentCard({ appointment }) {
     alert("Appointment cancelled successfully");
     setIsCancelled(true);
   }
+  // Confirm appointment from backend
+  const handleConfirmedAppointment = async() => {
+    await confirmAppointmentAPI(appointment._id);
+    await getProfile();
+    alert("Appointment confirmed successfully");
+    setIsConfirmed(true);
+  }
 
   useEffect(() => {
     if(appointment.status === "CANCELLED") {
       setIsCancelled(true);
+    }
+    if(appointment.status === "CONFIRMED") {
+      setIsConfirmed(true);
     }
   }, [appointment.status, appointment]);
 
@@ -56,12 +71,11 @@ function AppointmentCard({ appointment }) {
 
       {/* Right Section (Actions) */}
       <div className="flex flex-col justify-end gap-2 w-full md:w-auto">
-        {isCancelled ? (
+        {(isCancelled || isConfirmed) ? (
           <div
-            className="w-full md:w-48 text-center border-2 border-red-600 px-3 py-2 cursor-pointer text-red-600"
-            onClick={() => setIsCancelled(true)}
+            className={`w-full md:w-48 text-center border-2 ${isConfirmed ? 'border-green-600' : 'border-red-600'} px-3 py-2 cursor-pointer ${isConfirmed ? 'text-green-600' : 'text-red-600'} `}
           >
-            Appointment cancelled
+            Appointment {isConfirmed ? 'confirmed' : 'cancelled'} 
           </div>
         ) : (
           <>
@@ -73,12 +87,13 @@ function AppointmentCard({ appointment }) {
               <img src={assets.razorpay_logo} className="h-6 object-contain" />
             </div>
 
-            {/* Stripe */}
-            <div
+            {/* Thorugh Wallet */}
+            <div 
+              onClick={handleConfirmedAppointment}
               className={`w-full md:w-48 flex justify-center items-center border-2 border-slate-600 px-3 py-2 cursor-pointer
-            ${isActive ? "block" : "hidden"}`}
+            ${isActive ? "block" : "hidden"} hover:bg-blue-400 hover:text-white font-semibold`}
             >
-              <img src={assets.stripe_logo} className="h-6 object-contain" />
+              <h1 className="h-6 flex gap-1 items-center text-xl"> <IoIosWallet/> Wallet </h1>
             </div>
 
             {/* Pay Online */}

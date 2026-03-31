@@ -28,6 +28,12 @@ const userSchema = new mongoose.Schema({
     },
     contactNumber : {
         type: String,
+    }, 
+    walletBalance: {
+        type: Number,
+        default: function () {
+            return this.role === "patient" ? 1000 : 500;
+        }
     }
 }, { timestamps: true });
 

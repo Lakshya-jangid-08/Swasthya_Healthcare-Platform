@@ -41,6 +41,10 @@ export const cancelAppointmentAPI = (appointmentId) => {
   return api.patch(`/patients/appointments/${appointmentId}/cancel`);
 }
 
+export const confirmAppointmentAPI = (appointmentId) => {
+  return api.patch(`/patients/appointments/${appointmentId}/confirm`);
+}
+
 export const doctorSignupAPI = (doctorData) => {
   return api.post("/auth/create-doctor", doctorData);
 }
@@ -57,7 +61,14 @@ export const getUserDataApi = (id) => {
   return api.get(`/user/profile/${id}`);
 } 
 
-
 export const getUserlistAPI = () => {
   return api.get('/chat/user-list');
 } 
+
+export const getTransactionLists = () => {
+  return api.get('/patients/transaction/details')
+}
+
+export const addedAmount = (amount) => {
+  return api.post('/share/add-money', amount);
+}

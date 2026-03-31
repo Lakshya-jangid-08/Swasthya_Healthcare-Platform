@@ -7,6 +7,7 @@ import PatientBookAppointment from "../features/Patients/Pages/PatientBookAppoin
 import PatientAnalytics from "../features/Patients/Pages/PatientAnalytics";
 import PatientEditProfile from "../features/Patients/Pages/PatientEditProfile";
 import PatientLayout from "../layouts/PatientLayout";
+import PatientWalletStatus from "../features/Patients/Pages/PatientWalletStatus";
 
 const PatientRoutes = () => {
   return (
@@ -17,6 +18,7 @@ const PatientRoutes = () => {
         <Route path="/book-appointment/:id" element={<PatientBookAppointment />} />
         <Route path="/patient/analytics" element={<PatientAnalytics />} />
         <Route path="/patient/edit-profile" element={<PatientEditProfile />} />
+        <Route path="/patient/wallet-status" element = {<PatientWalletStatus/>} />
       </Route> 
     </Route>
   );

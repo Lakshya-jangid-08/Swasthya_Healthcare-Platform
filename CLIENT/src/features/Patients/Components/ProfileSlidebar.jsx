@@ -13,6 +13,7 @@ function ProfileSidebar({ role }) {
     { label: "Profile", path: "/patient/profile" },
     { label: "Edit Profile", path: "/patient/edit-profile" },
     { label: "Appointments", path: "/patient/appointments" },
+    { label: "Wallet Status", path: "/patient/wallet-status" },
     { label: "Analytics", path: "/patient/analytics" },
   ];
 
