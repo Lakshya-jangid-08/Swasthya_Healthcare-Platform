@@ -1,12 +1,10 @@
-const { getAppointmentLists } = require('../controllers/doctor.controller');
+const express = require('express');
+const { doctorAppointmentLists, getDoctor, getDoctorLists } = require('../controllers/doctor.controller');
 const authMiddleware = require('../middlewares/auth.middleware');
+const doctorRouter = express.Router();
 
-const doctorRouter = require('express').Router();
+doctorRouter.get('/', getDoctorLists);
+doctorRouter.get('/appointments', authMiddleware, doctorAppointmentLists);
+doctorRouter.get('/:doctorId', getDoctor);
 
-doctorRouter.get('/doctors', (req, res) => {
-    res.send('List of doctors');
-});
-
-doctorRouter.get('/appointments', authMiddleware, getAppointmentLists)
-
-module.exports = doctorRouter;
+module.exports = doctorRouter

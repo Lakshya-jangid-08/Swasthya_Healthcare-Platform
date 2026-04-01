@@ -18,7 +18,6 @@ const DoctorRoutes = () => {
         <Route path="/doctor/edit-profile" element={<DoctorEditProfile />} />
         <Route path="/doctor/chat" element={<DoctorChat />} />
         <Route path="/doctor/chat/:id" element={<DoctorChat />} />
-        {/* <Route path="/doctor/analytics" element={<doct />} /> not confirmed. */}
         <Route path="/doctor/payments-status" element={<DocotrPaymentStatus />} />
         <Route path="/doctor/reviews" element={<DoctorReviews />} />
         <Route path="/doctor/appointments" element={<DoctorAppointment />} />

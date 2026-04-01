@@ -1,50 +1,12 @@
-const { getDoctorLists, getDoctor, getAppointmentLists, getAppointment, cancelAppointment, getProfile, updateProfile, createAppointment, confirmAppointment, getTransactionLists } = require('../controllers/patient.controller');
+const express = require('express');
+const { getAppointment, getAppointmentLists, createAppointment, cancelAppointment, confirmAppointment } = require('../controllers/appointment.controller');
 const authMiddleware = require('../middlewares/auth.middleware');
-const patientRouter = require('express').Router();
+const patientRouter = express.Router();
 
-// Get patient profile (personal + medical info)
-patientRouter.get('/profile', authMiddleware, getProfile);
+patientRouter.get('/appointments', authMiddleware, getAppointmentLists);
+patientRouter.get('/appointments/:appointmentId', authMiddleware, getAppointment);
+patientRouter.post('/appointments', authMiddleware, createAppointment);
+patientRouter.patch('/appointments/:appointmentId/cancel', authMiddleware, cancelAppointment);
+patientRouter.patch('/appointments/:appointmentId/confirm', authMiddleware, confirmAppointment);
 
-// Update patient profile (age, gender, blood group etc.)
-patientRouter.patch('/profile',authMiddleware, updateProfile);
-
-// Get list of all verified doctors
-patientRouter.get('/doctors', getDoctorLists);
-
-// Get single doctor details by doctorId
-patientRouter.get('/doctors/:doctorId', getDoctor);
-
-// Create a new appointment with a doctor
-patientRouter.post('/appointments',authMiddleware, createAppointment);
-
-// Get all appointments of logged-in patient
-patientRouter.get('/appointments',authMiddleware, getAppointmentLists);
-
-// Get appointment details
-patientRouter.get('/appointments/:appointmentId',authMiddleware, getAppointment);
-
-// Cancel an appointment (before confirmed/completed)
-patientRouter.patch('/appointments/:appointmentId/cancel',authMiddleware, cancelAppointment);
-
-patientRouter.patch('/appointments/:appointmentId/confirm',authMiddleware, confirmAppointment);
-
-patientRouter.get('/transaction/details', authMiddleware, getTransactionLists);
-
-// -- yet not implement --
-
-// Get all messages of an appointment chat
-// patientRouter.get('/appointments/:appointmentId/messages');
-
-// Send message in appointment chat
-// patientRouter.post('/appointments/:appointmentId/messages');
-
-// Upload health report (PDF / image)
-// patientRouter.post('/health-reports');
-
-// Get all health reports of logged-in patient
-// patientRouter.get('/health-reports');
-
-// Get single health report details
-// patientRouter.get('/health-reports/:reportId');
-
-module.exports = patientRouter;
+module.exports = patientRouter  

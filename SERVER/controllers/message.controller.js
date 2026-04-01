@@ -35,7 +35,7 @@ const getUserForSlidebar = async (req, res) => {
 
 const getMessages = async (req, res) => {
     try{
-        const { otherUserId } = req.params;
+        const { userId: otherUserId } = req.params;
         const userId = req.user.id;
       
         const chat = await Chat.findOne({

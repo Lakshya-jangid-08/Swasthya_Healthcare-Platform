@@ -1,9 +1,32 @@
-const { translateAliases } = require("../models/Appointment.model");
 const Transaction = require("../models/Transaction.model");
 const User = require("../models/Users.model");
 
 
-const addedMoney = async(req, res) => {
+const getTransactionLists = async(req, res)=> {
+    try {
+        const userId = req.user.id;
+
+        const Transactions = await Transaction.find({
+            $or: [
+                { sender: userId },
+                { reciever: userId }
+            ]
+        })
+        .sort({ createdAt: -1 })
+        .populate('sender', 'fullname')
+        .populate('reciever', 'fullname');
+
+        res.json({
+            success: true,
+            Transactions
+        });
+
+    } catch(err) {
+        return res.status(500).json({message : "Internal Server Error", error : err});
+    }
+}
+
+const topUp = async(req, res) => {
     try {
         const {amount} = req.body;
         
@@ -41,5 +64,6 @@ const addedMoney = async(req, res) => {
 }
 
 module.exports = {
-    addedMoney
+    getTransactionLists,
+    topUp
 }

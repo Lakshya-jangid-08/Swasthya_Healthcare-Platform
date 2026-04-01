@@ -1,74 +1,93 @@
 import api from "./axios.config";
 
-export const updateProfile = (profileData) =>{
-  return api.put("/auth/update-user", profileData);
-}
+// AUTH
 
+export const registerAPI = (data) => {
+  return api.post("/auth/register", data);
+};
+
+export const loginAPI = (data) => {
+  return api.post("/auth/login", data);
+};
+
+export const logoutAPI = () => {
+  return api.post("/auth/logout");
+};
 
 export const checkAuthAPI = () => {
   return api.get("/auth/me");
 };
 
-export const getProfileAPI = () => {
-  return api.get("/auth/profile");
-}
+// USER
 
-export const logoutAPI = () => {
-  return api.post("/auth/logout-user");
-}
+export const updateProfile = (profileData) => {
+  return api.patch("/users/me", profileData);
+};
+
+export const getUserDataApi = (id) => {
+  return api.get(`/users/${id}`);
+};
+
+// PATIENT
+
+export const getProfileAPI = () => {
+  return api.get("/users/me");
+};
 
 export const getDoctorListsAPI = () => {
-  return api.get("/patients/doctors");
+  return api.get("/doctors");
 };
 
 export const getDoctorAPI = (doctorId) => {
-  return api.get(`/patients/doctors/${doctorId}`);
-}
+  return api.get(`/doctors/${doctorId}`);
+};
 
-export const bookAppointmentAPI = (appointmentData) => {
-  return api.post("/patients/appointments", appointmentData);
-}
+export const bookAppointmentAPI = (data) => {
+  return api.post("/patients/appointments", data);
+};
 
 export const getAppointmentsAPI = () => {
   return api.get("/patients/appointments");
-}
+};
 
-export const getAppointmentAPI = (appointmentId) => {
-  return api.get(`/patients/appointments/${appointmentId}`);
-}
+export const getAppointmentAPI = (id) => {
+  return api.get(`/patients/appointments/${id}`);
+};
 
-export const cancelAppointmentAPI = (appointmentId) => {
-  return api.patch(`/patients/appointments/${appointmentId}/cancel`);
-}
+export const cancelAppointmentAPI = (id) => {
+  return api.patch(`/patients/appointments/${id}/cancel`);
+};
 
-export const confirmAppointmentAPI = (appointmentId) => {
-  return api.patch(`/patients/appointments/${appointmentId}/confirm`);
-}
+export const confirmAppointmentAPI = (id) => {
+  return api.patch(`/patients/appointments/${id}/confirm`);
+};
 
-export const doctorSignupAPI = (doctorData) => {
-  return api.post("/auth/create-doctor", doctorData);
-}
+// Doctor
 
 export const doctorAppointments = () => {
-    return api.get("/doctors/appointments")
+  return api.get("/doctors/appointments");
+};
+
+export const doctorSignupAPI = (doctorData) => {
+  return api.post("/register/doctor", doctorData);
 }
 
-export const getAllMessagesAPI = (otherUserId) => {
-  return api.get(`/chat/message/${otherUserId}`);
-}
-
-export const getUserDataApi = (id) => {
-  return api.get(`/user/profile/${id}`);
-} 
+// Chat
 
 export const getUserlistAPI = () => {
-  return api.get('/chat/user-list');
-} 
+  return api.get("/chats");
+};
+
+export const getAllMessagesAPI = (userId) => {
+  return api.get(`/chats/${userId}/messages`);
+};
+
+// Transaction
 
 export const getTransactionLists = () => {
-  return api.get('/patients/transaction/details')
-}
+  return api.get("/transactions");
+};
 
-export const addedAmount = (amount) => {
-  return api.post('/share/add-money', amount);
-}
+export const addedAmount = (data) => {
+  return api.post("/transactions/wallet/topup", data);
+};

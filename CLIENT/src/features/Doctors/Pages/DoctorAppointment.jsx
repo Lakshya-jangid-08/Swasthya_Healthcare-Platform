@@ -13,9 +13,6 @@ function DoctorAppointment() {
   
     const fetchAppointments = async() => {
       const response = await doctorAppointments();
-      console.log("FULL RESPONSE:", response);
-      console.log("DATA:", response.data);
-
       setAppointments(response.data.list);
     }
   

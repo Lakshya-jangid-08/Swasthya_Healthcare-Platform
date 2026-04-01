@@ -23,7 +23,7 @@ function ChatContainer({SenderId, ReceiverId}) {
       text: message
     };
 
-    socket.emit("send_msg", msgObj);
+    socket.emit("send message", msgObj);
     setMessageData(prev => [...prev, msgObj]);
     setMessage("");
 
@@ -44,14 +44,16 @@ function ChatContainer({SenderId, ReceiverId}) {
   
   useEffect(()=> {
     if(!socket) return;
-    socket.on("rec_msg", (msg) => {
+    socket.on("receive message", (msg) => {
       setMessageData(prev => [...prev, msg]);
     });
-    return () => socket.off("rec_msg");
+    return () => socket.off("receive message");
   }, [socket])
 
   const fetchMsg = async (receiverId) => {
     const data = await getAllMessagesAPI(receiverId);
+    console.log(data);
+    
     return data; 
   }
 
