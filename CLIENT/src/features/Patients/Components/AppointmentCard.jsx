@@ -44,7 +44,7 @@ function AppointmentCard({ appointment }) {
           appointment.doctorId?.userId?.profileImage ? (
             <img
               src={appointment.doctorId.userId.profileImage}
-              className="object-contain h-28 w-28  bg-blue-50 rounded-full"
+              className="object-contain h-28 w-28  bg-blue-50 rounded-full ring-2 ring-black"
             />
           ) : (
             <div className="h-28 w-28 rounded-full bg-gray-200 flex items-center justify-center text-3xl text-gray-500">

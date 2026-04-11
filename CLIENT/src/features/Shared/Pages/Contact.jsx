@@ -70,156 +70,143 @@ function Contact() {
     }
   }
 
-  return (
-    <div className="min-h-screen w-full px-4 sm:px-10 md:px-20 py-10">
+return (
+  <div className="min-h-screen bg-[#eef2f7] flex items-center justify-center px-6">
+    
+    <div className="w-full max-w-6xl grid md:grid-cols-2 gap-10">
       
-      {/* HEADER */}
-      <div className="text-center mb-12">
-        <h1 className="font-semibold text-2xl sm:text-3xl underline mb-4">
-          CONTACT US
+      {/* LEFT SECTION */}
+      <div className="flex flex-col justify-center">
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          Contact Us
         </h1>
-        <p className="text-gray-600 text-base sm:text-lg">
-          Have any questions? We'd love to hear from you. Get in touch with us today.
+
+        <p className="text-gray-600 mb-6 max-w-md">
+          Email, call, or complete the form to learn how we can solve your problem.
         </p>
-      </div>
 
-      {/* CONTACT INFO */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-12">
-        <div className="flex flex-col items-center sm:items-start">
-          <div className="flex items-center gap-3 mb-3">
-            <MdEmail className="w-6 h-6 text-blue-600" />
-            <h3 className="font-semibold text-gray-900">Email</h3>
-          </div>
-          <p className="text-gray-600 text-sm sm:text-base">support@swasthya.com</p>
-          <p className="text-gray-600 text-sm sm:text-base">info@swasthya.com</p>
+        <div className="space-y-2 text-gray-700 mb-8">
+          <p>info@swasthya.com</p>
+          <p>+91 8001234567</p>
+          <p className="underline cursor-pointer">Customer Support</p>
         </div>
 
-        <div className="flex flex-col items-center sm:items-start">
-          <div className="flex items-center gap-3 mb-3">
-            <MdPhone className="w-6 h-6 text-blue-600" />
-            <h3 className="font-semibold text-gray-900">Phone</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-sm text-gray-600">
+          <div>
+            <h3 className="font-semibold text-gray-800 mb-1">Customer Support</h3>
+            <p>We are available 24/7 to help you with your queries.</p>
           </div>
-          <p className="text-gray-600 text-sm sm:text-base">+91 (800) 123-4567</p>
-          <p className="text-gray-600 text-sm sm:text-base">+91 (800) 987-6543</p>
-        </div>
 
-        <div className="flex flex-col items-center sm:items-start">
-          <div className="flex items-center gap-3 mb-3">
-            <MdLocationOn className="w-6 h-6 text-blue-600" />
-            <h3 className="font-semibold text-gray-900">Address</h3>
+          <div>
+            <h3 className="font-semibold text-gray-800 mb-1">Feedback</h3>
+            <p>Your feedback helps us improve our services.</p>
           </div>
-          <p className="text-gray-600 text-sm sm:text-base">123 Medical Plaza</p>
-          <p className="text-gray-600 text-sm sm:text-base">New Delhi, India - 110001</p>
+
+          <div>
+            <h3 className="font-semibold text-gray-800 mb-1">Media</h3>
+            <p>For press inquiries, contact our media team.</p>
+          </div>
         </div>
       </div>
 
-      {/* FORM */}
-      <div className="max-w-2xl mx-auto">
-        <h2 className="text-2xl font-semibold text-gray-900 mb-6">Send us a Message</h2>
+      {/* RIGHT SECTION (FORM CARD) */}
+      <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md mx-auto">
+        
+        <h2 className="text-2xl font-semibold text-gray-900 mb-1">
+          Get in Touch
+        </h2>
+        <p className="text-sm text-gray-500 mb-6">
+          You can reach us anytime
+        </p>
 
         {successMessage && (
-          <div className="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg text-sm">
+          <div className="mb-4 p-3 bg-green-50 text-green-700 rounded-lg text-sm">
             {successMessage}
           </div>
         )}
 
         {errorMessage && (
-          <div className="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg text-sm">
+          <div className="mb-4 p-3 bg-red-50 text-red-700 rounded-lg text-sm">
             {errorMessage}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-900 mb-1">
-                Full Name *
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Your name"
-              />
-            </div>
 
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-900 mb-1">
-                Email Address *
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Your email"
-              />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label htmlFor="phone" className="block text-sm font-medium text-gray-900 mb-1">
-                Phone Number
-              </label>
-              <input
-                type="tel"
-                id="phone"
-                name="phone"
-                value={formData.phone}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Your phone"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="subject" className="block text-sm font-medium text-gray-900 mb-1">
-                Subject *
-              </label>
-              <input
-                type="text"
-                id="subject"
-                name="subject"
-                value={formData.subject}
-                onChange={handleInputChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Subject"
-              />
-            </div>
-          </div>
-
-          <div>
-            <label htmlFor="message" className="block text-sm font-medium text-gray-900 mb-1">
-              Message *
-            </label>
-            <textarea
-              id="message"
-              name="message"
-              value={formData.message}
+          {/* Name */}
+          <div className="grid grid-cols-2 gap-3">
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
               onChange={handleInputChange}
-              rows="5"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
-              placeholder="Your message..."
-            ></textarea>
+              placeholder="First name"
+              className="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+            />
+            <input
+              type="text"
+              placeholder="Last name"
+              className="px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+            />
           </div>
 
+          {/* Email */}
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            placeholder="Your email"
+            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+          />
+
+          {/* Phone */}
+          <input
+            type="tel"
+            name="phone"
+            value={formData.phone}
+            onChange={handleInputChange}
+            placeholder="Phone number"
+            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+          />
+
+          {/* Subject */}
+          <input
+            type="text"
+            name="subject"
+            value={formData.subject}
+            onChange={handleInputChange}
+            placeholder="Subject"
+            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+          />
+
+          {/* Message */}
+          <textarea
+            name="message"
+            value={formData.message}
+            onChange={handleInputChange}
+            rows="4"
+            placeholder="How can we help?"
+            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none resize-none"
+          />
+
+          {/* Button */}
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-700 hover:bg-blue-800 disabled:bg-gray-400 text-white font-semibold py-2 rounded-lg transition"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-full font-medium transition"
           >
-            {loading ? 'Sending...' : 'Send Message'}
+            {loading ? "Sending..." : "Submit"}
           </button>
+
+          <p className="text-xs text-gray-400 text-center">
+            By contacting us, you agree to our Terms & Privacy Policy
+          </p>
         </form>
       </div>
     </div>
-  )
+  </div>
+)
 }
 
 export default Contact

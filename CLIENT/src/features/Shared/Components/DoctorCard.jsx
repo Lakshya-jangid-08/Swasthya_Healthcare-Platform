@@ -8,17 +8,17 @@ function DoctorCard({ doctor }) {
   const navigate = useNavigate();
 
   return (
-    <div className="border border-gray-300 rounded-xl p-4 flex flex-col items-center gap-4 hover:shadow-lg transition">
+    <div className="hover:scale-105 border border-gray-100 hover:shadow-2xl shadow-lg rounded-xl p-4 flex flex-col items-center gap-4  transition">
       
-      {doctor.userId?.image ? (
+      {doctor.userId?.profileImage ? (
         <img
-          src={doctor.userId.image}
+          src={doctor.userId.profileImage}
           alt={doctor.userId.fullname}
-          className="h-28 w-28 rounded-full object-cover"
+          className="h-28 w-28 rounded-full object-cover ring-4 ring-black shadow-md"
         />
       ) : (
-        <div className="h-28 w-28 rounded-full bg-gray-200 flex items-center justify-center text-3xl text-gray-500">
-          {doctor.userId?.fullname?.charAt(4)}
+        <div className="h-28 w-28 rounded-full bg-gray-200 flex items-center justify-center text-3xl text-gray-500 ring-4 ring-gray-100 shadow-md">
+          {doctor.userId?.fullname?.charAt(0)}
         </div>
       )}
 
@@ -30,16 +30,36 @@ function DoctorCard({ doctor }) {
         <p className="text-gray-600 text-sm">{doctor.specialization}</p>
       </div>
 
-      <div className="flex justify-between items-center w-full px-2">
+      <div className="flex flex-col justify-between items-center w-full px-2 gap-2">
         <p className="font-semibold text-sm">
-          Fees: ₹{doctor.consultationFee}
+          ₹{doctor.consultationFee} / consultation
         </p>
-
-        <FaArrowRight
-          size={24}
-          className="text-white px-3 py-1 cursor-pointer hover:scale-110 transition bg-blue-600 w-10 rounded-lg"
+        <div
           onClick={() => navigate(`/book-appointment/${doctor._id}`)}
-        />
+          className="
+            relative overflow-hidden flex items-center justify-center gap-2 
+            px-4 py-2 rounded-lg 
+            text-white cursor-pointer 
+            bg-blue-600
+            transition-all duration-300
+            group
+            whitespace-nowrap
+          "
+        >
+          <span className="relative z-10 flex items-center gap-2">
+            Book Appointment
+            <FaArrowRight size={18} />
+          </span>
+
+          {/* HOVER OVERLAY */}
+          <span className="
+            absolute inset-0 
+            bg-gradient-to-r from-blue-500 to-blue-700 
+            translate-x-[-100%] 
+            group-hover:translate-x-0 
+            transition-transform duration-300
+          "></span>
+        </div>
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ const getDoctorLists  = async (req, res) => {
         const doctorList = await Doctor.find(
             {status : 'active'} ,
             "specialization clinicAddress consultationFee yearsOfExperience isVerified"
-        ).populate("userId", "fullname email contactNumber");
+        ).populate("userId", "fullname email contactNumber  profileImage");
         return res.status(200).json({doctorList , message : "Fetch succesfully"});
     
     } catch(err) {

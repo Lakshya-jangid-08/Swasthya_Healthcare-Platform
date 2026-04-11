@@ -1,128 +1,97 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useSocket } from '../../../context/SocketContext';
-import InboxHeader from './InboxHeader';
-import { IoSend } from 'react-icons/io5';
-import { getAllMessagesAPI } from '../../../service/apis';
+// ChatContainer.jsx
+import React, { useEffect, useRef, useState } from "react";
+import { useSocket } from "../../../context/SocketContext";
+import InboxHeader from "./InboxHeader";
+import { IoSend } from "react-icons/io5";
+import { getAllMessagesAPI } from "../../../service/apis";
 
-function ChatContainer({SenderId, ReceiverId}) {
-
-  const {socket, connectSocket} = useSocket();
+function ChatContainer({ SenderId, ReceiverId }) {
+  const { socket, connectSocket } = useSocket();
   const [message, setMessage] = useState("");
   const [messageData, setMessageData] = useState([]);
-
   const bottomRef = useRef(null);
 
   const handleSubmit = (e) => {
-
     e.preventDefault();
     if (!message.trim()) return;
-    
+
     const msgObj = {
       senderId: SenderId,
       receiverId: ReceiverId,
-      text: message
+      text: message,
     };
 
     socket.emit("send message", msgObj);
-    setMessageData(prev => [...prev, msgObj]);
+    setMessageData((prev) => [...prev, msgObj]);
     setMessage("");
-
-  }
-
-  const [onlineUser, setonlineUser] = useState({})
+  };
 
   useEffect(() => {
     connectSocket(SenderId);
+  }, []);
+
+  useEffect(() => {
     if (!socket) return;
-    socket.on("getOnlineUsers", (obj)=>{
-      setonlineUser(obj)
-    })
-    console.log("online users", onlineUser);
-    
-    return () => socket.off("getOnlineUsers");
-  }, [socket])
-  
-  useEffect(()=> {
-    if(!socket) return;
+
     socket.on("receive message", (msg) => {
-      setMessageData(prev => [...prev, msg]);
+      setMessageData((prev) => [...prev, msg]);
     });
+
     return () => socket.off("receive message");
-  }, [socket])
+  }, [socket]);
 
-  const fetchMsg = async (receiverId) => {
-    const data = await getAllMessagesAPI(receiverId);
-    console.log(data);
-    
-    return data; 
-  }
+  useEffect(() => {
+    const loadMessages = async () => {
+      const data = await getAllMessagesAPI(ReceiverId);
+      setMessageData(data?.data?.msgs || []);
+    };
+    loadMessages();
+  }, [ReceiverId]);
 
-useEffect(() => {
-  const loadMessages = async () => {
-    const data = await fetchMsg(ReceiverId);
-    setMessageData(data?.data?.msgs || []);
-  };
-
-  loadMessages();
-}, [ReceiverId]);
-  
-useEffect(() => {
-  bottomRef.current?.scrollIntoView();
-}, [ReceiverId]); 
-
-useEffect(() => {
-  bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-}, [messageData]); 
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messageData]);
 
   return (
-  <>
-    {/* HEADER */}
-    <div className="flex-shrink-0 border-b bg-white">
-      <InboxHeader ReceiverId = {ReceiverId}/>
-    </div>
+    <>
+      <InboxHeader ReceiverId={ReceiverId} />
 
-    {/* MESSAGES */}
-    <div className="flex-1 w-full overflow-y-auto px-6 py-4 bg-gray-100 space-y-3">
+      {/* MESSAGES */}
+      <div className="flex-1 overflow-y-auto px-6 py-4 bg-gray-100 space-y-2">
+        {messageData.map((m, i) => {
+          const isMe = m.senderId === SenderId;
 
-      {messageData.map((m,index) => {
-        const isMe = m.senderId === SenderId;
-
-        return (
-          <div key={index} className={`flex ${isMe ? "justify-end" : "justify-start"}`} >
-            <div className={` max-w-xs md:max-w-md px-4 py-2 text-lg ${isMe
-                  ? "bg-green-700 text-white rounded-l-xl rounded-tr-xl"
-                  : "bg-white text-gray-800 rounded-r-xl rounded-tl-xl border"}
-              `}>
-              {m.text}
+          return (
+            <div key={i} className={`flex ${isMe ? "justify-end" : "justify-start"}`}>
+              <div
+                className={`px-4 py-2 rounded-xl max-w-xs text-lg shadow
+                ${isMe
+                  ? "bg-blue-600 text-white rounded-br-none"
+                  : "bg-white text-gray-800 border rounded-bl-none"
+                }`}
+              >
+                {m.text}
+              </div>
             </div>
-          </div>
-        );
-      })}
-      <div ref={bottomRef}></div>
-    </div>
+          );
+        })}
+        <div ref={bottomRef}></div>
+      </div>
 
-    {/* INPUT */}
-    <div className="flex-shrink-0 bg-white border-t px-5 py-3">
-
-      <form onSubmit={handleSubmit} className="flex items-center gap-3">
-
+      {/* INPUT */}
+      <form onSubmit={handleSubmit} className="flex gap-2 p-3 border-t bg-white">
         <input
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          className="flex-1 border rounded-full px-4 h-11 outline-none focus:border-green-500"
+          className="flex-1 border rounded-full px-4 py-2 outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Type a message..."
-          type="text"
         />
-
-        <button type="submit" className="rounded-full bg-green-600 hover:bg-green-700 w-11 h-11 flex items-center justify-center">
-          <IoSend color="white" size={18} />
+        <button className="bg-blue-600 text-white rounded-full p-3 hover:bg-blue-700">
+          <IoSend />
         </button>
-
       </form>
-
-    </div>
-  </>
+    </>
   );
 }
 
-export default ChatContainer
+export default ChatContainer;

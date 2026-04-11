@@ -3,53 +3,89 @@ import { assets } from "../../../assets/assets_frontend/assets";
 
 function About() {
   return (
-    
-    <div className="min-h-screen w-full px-4 sm:px-10 md:px-20 py-10">
+    <div className="min-h-screen bg-gray-50 px-6 md:px-20 py-16">
 
-        <div className="flex flex-col md:flex-row items-center gap-10">
+      {/* HERO SECTION */}
+      <div className="grid md:grid-cols-2 gap-12 items-center mb-20">
 
-          {/* IMAGE */}
-          <div className="w-full md:w-1/2 flex justify-center">
-            <img
-              src={assets.about_image}
-              className="w-full max-w-md object-contain"
-              alt="About us"
-            />
-          </div>
+        {/* LEFT CONTENT */}
+        <div>
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+            We Make Healthcare <span className="text-blue-600">Simple</span>
+          </h1>
 
-          {/* CONTENT */}
-          <div className="w-full md:w-1/2">
-            <h1 className="font-semibold text-2xl sm:text-3xl text-center underline mb-8">
-              ABOUT US
-            </h1>
+          <p className="text-gray-600 text-lg mb-4">
+            Your trusted platform to connect with top doctors, book appointments, and manage your health journey — all in one place.
+          </p>
 
-            <div className="flex flex-col gap-4 text-base sm:text-lg text-gray-700">
-              <p>
-                Welcome to our healthcare platform, your trusted partner in
-                connecting with top-notch medical professionals. Our mission is
-                to make healthcare accessible and convenient for everyone by
-                providing a comprehensive directory of experienced doctors
-                across various specialties.
-              </p>
+          <p className="text-gray-600 text-lg">
+            We believe healthcare should be accessible, transparent, and effortless for everyone.
+          </p>
+        </div>
 
-              <p>
-                Our platform offers an easy-to-use interface where you can
-                browse through detailed profiles of doctors, read patient
-                reviews, and book appointments online. We are committed to
-                ensuring that you find the right healthcare provider that meets
-                your needs.
-              </p>
-
-              <p>
-                Thank you for choosing our platform for your healthcare needs.
-                We are dedicated to supporting you on your journey to better
-                health and well-being.
-              </p>
-            </div>
-          </div>
-
+        {/* RIGHT IMAGE */}
+        <div className="flex justify-center">
+          <img
+            src={assets.about_image}
+            className="w-full max-w-lg rounded-2xl shadow-xl"
+            alt="About"
+          />
         </div>
       </div>
+
+      {/* INFO SECTION */}
+      <div className="max-w-4xl mx-auto text-center mb-20">
+        <h2 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-6">
+          About Our Platform
+        </h2>
+
+        <p className="text-gray-600 text-lg mb-4">
+          We connect patients with verified doctors across multiple specialties,
+          making it easier than ever to find the right healthcare provider.
+        </p>
+
+        <p className="text-gray-600 text-lg">
+          With our intuitive platform, you can explore doctor profiles, read reviews,
+          and book appointments in just a few clicks.
+        </p>
+      </div>
+
+      {/* FEATURES SECTION */}
+      <div className="grid md:grid-cols-3 gap-8">
+
+        {/* CARD 1 */}
+        <div className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition">
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            Verified Doctors
+          </h3>
+          <p className="text-gray-600">
+            Access trusted and experienced healthcare professionals across various fields.
+          </p>
+        </div>
+
+        {/* CARD 2 */}
+        <div className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition">
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            Easy Booking
+          </h3>
+          <p className="text-gray-600">
+            Schedule appointments quickly with a seamless and user-friendly interface.
+          </p>
+        </div>
+
+        {/* CARD 3 */}
+        <div className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition">
+          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            Smart Analytics
+          </h3>
+          <p className="text-gray-600">
+            Track your health insights and appointments with powerful analytics tools.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
   );
 }
 
